@@ -48,7 +48,7 @@ public:
         if (indiceTarea >= 0 && indiceTarea < tareas.size()) {
             tareas[indiceTarea].agregarMensaje(remitente, contenido);
         } else {
-            cout << "Error: Índice de tarea no válido." << endl;
+            cout << "Error: Indice de tarea no valido." << endl;
         }
     }
 
@@ -62,29 +62,34 @@ public:
     }
 };
 
-// Funciones adicionales para simular la interacción del usuario
 void menuPrincipal(TableroProyectos& tablero);
 void crearNuevaTarea(TableroProyectos& tablero);
 void agregarMensajeATarea(TableroProyectos& tablero);
 
 int main() {
     TableroProyectos tablero;
-
     menuPrincipal(tablero);
-
     return 0;
 }
 
 void menuPrincipal(TableroProyectos& tablero) {
+    string opcionStr;
     int opcion;
+
     do {
-        cout << "\n=== Menú Principal ===" << endl;
+        cout << "\n=== Menu Principal ===" << endl;
         cout << "1. Crear nueva tarea\n";
         cout << "2. Agregar mensaje a tarea\n";
         cout << "3. Mostrar tablero\n";
         cout << "0. Salir\n";
-        cout << "Seleccione una opción: ";
-        cin >> opcion;
+        cout << "Seleccione una opcion: ";
+        cin >> opcionStr;
+
+        try {
+            opcion = stoi(opcionStr);
+        } catch (const invalid_argument& e) {
+            opcion = -1;
+        }
 
         switch (opcion) {
             case 1:
@@ -100,35 +105,34 @@ void menuPrincipal(TableroProyectos& tablero) {
                 cout << "Saliendo del programa. ¡Hasta luego!\n";
                 break;
             default:
-                cout << "Opción no válida. Inténtelo de nuevo.\n";
+                cout << "Opcion no valida. Intentelo de nuevo.\n";
         }
     } while (opcion != 0);
 }
 
 void crearNuevaTarea(TableroProyectos& tablero) {
     string descripcion;
-    cout << "Ingrese la descripción de la nueva tarea: ";
-    cin.ignore(); // Limpiar el buffer del teclado antes de getline
+    cout << "Ingrese la descripcion de la nueva tarea: ";
+    cin.ignore();
     getline(cin, descripcion);
-
     tablero.agregarTarea(descripcion);
-    cout << "Nueva tarea creada con éxito.\n";
+    cout << "Nueva tarea creada con exito.\n";
 }
 
 void agregarMensajeATarea(TableroProyectos& tablero) {
     int indiceTarea;
     string remitente, contenido;
 
-    cout << "Ingrese el índice de la tarea a la que desea agregar un mensaje: ";
+    cout << "Ingrese el indice de la tarea a la que desea agregar un mensaje: ";
     cin >> indiceTarea;
 
     cout << "Ingrese su nombre (remitente del mensaje): ";
     cin >> remitente;
 
     cout << "Ingrese el contenido del mensaje: ";
-    cin.ignore(); // Limpiar el buffer del teclado antes de getline
+    cin.ignore();
     getline(cin, contenido);
 
     tablero.agregarMensajeTarea(indiceTarea - 1, remitente, contenido);
-    cout << "Mensaje agregado con éxito a la tarea " << indiceTarea << ".\n";
+    cout << "Mensaje agregado con exito a la tarea " << indiceTarea << ".\n";
 }
